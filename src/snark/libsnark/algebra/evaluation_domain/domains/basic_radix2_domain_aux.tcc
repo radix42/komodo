@@ -15,9 +15,6 @@
 #define BASIC_RADIX2_DOMAIN_AUX_TCC_
 
 #include <cassert>
-#ifdef MULTICORE
-#include <omp.h>
-#endif
 #include "algebra/fields/field_utils.hpp"
 #include "common/profiling.hpp"
 #include "common/utils.hpp"
@@ -149,14 +146,14 @@ template<typename FieldT>
 void _basic_parallel_radix2_FFT(std::vector<FieldT> &a, const FieldT &omega)
 {
 #ifdef MULTICORE
-    const size_t num_cpus = omp_get_max_threads();
+    const size_t num_cpus = 1;
 #else
     const size_t num_cpus = 1;
 #endif
     const size_t log_cpus = ((num_cpus & (num_cpus - 1)) == 0 ? log2(num_cpus) : log2(num_cpus) - 1);
 
 #ifdef DEBUG
-    print_indent(); printf("* Invoking parallel FFT on 2^%zu CPUs (omp_get_max_threads = %zu)\n", log_cpus, num_cpus);
+    print_indent(); printf("* Invoking parallel FFT on 2^%zu CPUs (1 = %zu)\n", log_cpus, num_cpus);
 #endif
 
     if (log_cpus == 0)

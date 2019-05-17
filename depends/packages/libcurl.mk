@@ -8,6 +8,13 @@ $(package)_config_opts_mingw32=--enable-mingw --disable-shared --enable-static -
 $(package)_config_opts_darwin=--disable-shared --enable-static --prefix=$(host_prefix)
 $(package)_cflags_darwin=-mmacosx-version-min=10.9
 $(package)_conf_tool=./configure
+$(package)_patches=patch-lib-cookie.c  patch-src-tool_operate.c
+
+define $(package)_preprocess_cmds
+  patch  < $($(package)_patch_dir)/patch-lib-cookie.c && \
+  patch  < $($(package)_patch_dir)/patch-src-tool_operate.c
+endef
+
 
 ifeq ($(build_os),darwin)
 define $(package)_set_vars
@@ -16,7 +23,7 @@ endef
 endif
 
 define $(package)_config_cmds
-  $($(package)_conf_tool) $($(package)_config_opts)
+  $($(package)_conf_tool) $($(package)_config_opts) --without-ssl
 endef
 
 

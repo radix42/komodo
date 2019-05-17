@@ -1,2 +1,2 @@
-gcc -o oraclefeed cc/dapps/oraclefeed.c -lm
-gcc -o zmigrate cc/dapps/zmigrate.c -lm
+cc -o oraclefeed cc/dapps/oraclefeed.c -lm
+cc -o zmigrate cc/dapps/zmigrate.c -lm

@@ -1,9 +1,9 @@
 AC_DEFUN([BITCOIN_FIND_BDB62],[
   AC_MSG_CHECKING([for Berkeley DB C++ headers])
-  BDB_CPPFLAGS=
-  BDB_LIBS=
-  bdbpath=X
-  bdb62path=X
+  BDB_CPPFLAGS='-I/usr/local/include'
+  BDB_LIBS='-L/usr/local/lib -ldb_cxx-6.2'
+  bdbpath=
+  bdb62path=
   bdbdirlist=
   for _vn in 6.2 62 6 ''; do
     for _pfx in b lib ''; do
@@ -53,12 +53,6 @@ AC_DEFUN([BITCOIN_FIND_BDB62],[
   AC_SUBST(BDB_CPPFLAGS)
   
   # TODO: Ideally this could find the library version and make sure it matches the headers being used
-  for searchlib in db_cxx-6.2 db_cxx; do
-    AC_CHECK_LIB([$searchlib],[main],[
-      BDB_LIBS="-l${searchlib}"
-      break
-    ])
-  done
   if test "x$BDB_LIBS" = "x"; then
       AC_MSG_ERROR([libdb_cxx missing, Bitcoin Core requires this library for wallet functionality (--disable-wallet to disable wallet functionality)])
   fi

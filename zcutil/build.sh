@@ -21,7 +21,7 @@ cd "$(dirname "$("$READLINK" -f "$0")")/.."
 # Allow user overrides to $MAKE. Typical usage for users who need it:
 #   MAKE=gmake ./zcutil/build.sh -j$(nproc)
 if [[ -z "${MAKE-}" ]]; then
-    MAKE=make
+    MAKE=gmake
 fi
 
 # Allow overrides to $BUILD and $HOST for porters. Most users will not need it.
@@ -35,7 +35,7 @@ fi
 
 # Allow users to set arbitrary compile flags. Most users will not need this.
 if [[ -z "${CONFIGURE_FLAGS-}" ]]; then
-    CONFIGURE_FLAGS=""
+    CONFIGURE_FLAGS="--disable-dependency-tracking"
 fi
 
 if [ "x$*" = 'x--help' ]
@@ -104,5 +104,5 @@ ld -v
 HOST="$HOST" BUILD="$BUILD" NO_PROTON="$PROTON_ARG" "$MAKE" "$@" -C ./depends/ V=1
 ./autogen.sh
 
-CONFIG_SITE="$PWD/depends/$HOST/share/config.site" ./configure "$HARDENING_ARG" "$LCOV_ARG" "$TEST_ARG" "$MINING_ARG" "$PROTON_ARG" $CONFIGURE_FLAGS CXXFLAGS='-g'
+CONFIG_SITE="$PWD/depends/$HOST/share/config.site" ./configure "$HARDENING_ARG" "$LCOV_ARG" "$TEST_ARG" "$MINING_ARG" "$PROTON_ARG" $CONFIGURE_FLAGS CXXFLAGS='-g -fPIC'
 "$MAKE" "$@" V=1
