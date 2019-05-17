@@ -238,7 +238,6 @@ BITCOIN_CORE_H = \
   threadsafety.h \
   timedata.h \
   tinyformat.h \
-  torcontrol.h \
   transaction_builder.h \
   txdb.h \
   txmempool.h \
@@ -340,7 +339,6 @@ libbitcoin_server_a_SOURCES = \
   script/serverchecker.cpp \
   script/sigcache.cpp \
   timedata.cpp \
-  torcontrol.cpp \
   txdb.cpp \
   txmempool.cpp \
   validationinterface.cpp \
