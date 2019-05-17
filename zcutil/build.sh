@@ -102,8 +102,15 @@ as --version
 ld -v
 
 HOST="$HOST" BUILD="$BUILD" NO_PROTON="$PROTON_ARG" "$MAKE" "$@" -C ./depends/ V=1
-cp librustzcash.a depends/x86_64-unknown-freebsd12.0/lib/
-cp librustzcash.h depends/x86_64-unknown-freebsd12.0/include/
+
+git clone https://github.com/zcash/librustzcash
+cd librustzcash/librustzcash
+cargo build
+cp include/librustzcash.h ../../depends/x86_64-unknown-freebsd12.0/include/
+cd ..
+cp target/debug/librustzcash.a ../depends/x86_64-unknown-freebsd12.0/lib
+cd ..
+
 ./autogen.sh
 
 CONFIG_SITE="$PWD/depends/$HOST/share/config.site" ./configure "$HARDENING_ARG" "$LCOV_ARG" --enable-tests=no "$MINING_ARG" "$PROTON_ARG" $CONFIGURE_FLAGS CXXFLAGS='-g -fPIC'
